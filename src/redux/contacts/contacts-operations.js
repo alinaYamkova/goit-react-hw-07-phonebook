@@ -13,13 +13,13 @@ import {
 
 axios.defaults.baseURL = "http://localhost:4040";
 
-const fetchContact = () => async (dispatch) => {
+const fetchContact = () => async dispatch => {
   dispatch(fetchContactRequest());
 
   try {
     const { data } = await axios.get("/contacts");
     dispatch(fetchContactSuccess(data));
-  } catch (error) {
+  } catch(error) {
     dispatch(fetchContactError(error));
   }
   // axios
@@ -28,13 +28,9 @@ const fetchContact = () => async (dispatch) => {
   //   .catch((error) => dispatch(fetchContactError(error)));
 };
 
-// const addContact = ({ name, number }) => async (dispatch) => {
-//   const contact = {
-//     name,
-//     number,
-//   };
-const addContact = contact => async (dispatch) => {
+const addContact = ({ name, number }) => async dispatch => {
   dispatch(addContactRequest());
+  const contact = { name, number };
 
   try {
     const { data } = await axios.post("/contacts", contact);
@@ -48,20 +44,19 @@ const addContact = contact => async (dispatch) => {
   //   .catch((error) => dispatch(addContactError(error)));
 };
 
-const deleteContact = (contactId) => async (dispatch) => {
+const deleteContact = (id) => async dispatch => {
   dispatch(deleteContactRequest());
 
   try {
-    await axios.delete(`/contacts/${contactId}`);
-    dispatch(deleteContactSuccess(contactId));
+    await axios.delete(`/contacts/${id}`);
+    dispatch(deleteContactSuccess(id));
   } catch (error) {
     dispatch(deleteContactError(error));
   }
   // axios
-  //   .delete(`/contacts/${contactId}`)
-  //   .then(() => dispatch(deleteContactSuccess(contactId)))
+  //   .delete(`/contacts/${id}`)
+  //   .then(() => dispatch(deleteContactSuccess(id)))
   //   .catch((error) => dispatch(deleteContactError(error)));
 };
  
-// eslint-disable-next-line import/no-anonymous-default-export
 export default { fetchContact, addContact, deleteContact };

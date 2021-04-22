@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Loader from '../../Loader/Loader';
 import PropTypes from "prop-types";
 import s from "../ContactList/phonebook.module.css";
-import { contactsOperations, contactsSelectors } from "../../redux/contacts";
+import contactsOperations from "../../redux/contacts/contacts-operations";
+import contactsSelectors  from "../../redux/contacts/contacts-selectors"
 
 class ContactList extends Component {
   componentDidMount() {
-    this.props.fetchContacts();
+    this.props.fetchContact();
   }
 
   render() {
@@ -14,7 +16,7 @@ class ContactList extends Component {
     
     return (
       <>
-        {isLoadingContacts && <h1 className={s.laoding}>Загружаем....</h1>}
+        {isLoadingContacts && <h1 className={s.loading}><Loader /></h1>}
         <ol>
           {contacts.map(({ id, name, number }) => (
             <li className={s.list} key={id}>
@@ -40,26 +42,16 @@ ContactList.propTypes = {
   onDeleteContact: PropTypes.func.isRequired,
 };
 
-// const showFilteredContacts = (contacts, filter) => {
-//   const normalizedFilter = filter.toLowerCase();
-//   return contacts.filter((contact) =>
-//      contact.name.includes(normalizedFilter)
-//   );
-// };
+// const { getLoading, showFilteredContacts } = contactsSelectors;
 
-const { getLoading, showFilteredContacts } = contactsSelectors;
-
-const mapStateToProps = (state) => {
-  // const {items, filter } = state.contacts;
-  return { 
-    isLoadingContacts: getLoading(state),
-    contacts: showFilteredContacts(state) 
-  };
-};
+const mapStateToProps = (state) => ({
+  contacts: contactsSelectors.showFilteredContacts(state),
+  isLoadingContacts: contactsSelectors.getLoading(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  onDeleteContact: (id) => dispatch(contactsOperations.deleteContact(id)),
   fetchContact: () => dispatch(contactsOperations.fetchContact()),
+  onDeleteContact: (id) => dispatch(contactsOperations.deleteContact(id)),
 });
     
 export default connect(mapStateToProps,mapDispatchToProps) (ContactList);

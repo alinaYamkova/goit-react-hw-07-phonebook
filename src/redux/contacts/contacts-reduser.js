@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import { 
     fetchContactRequest,
     fetchContactSuccess,

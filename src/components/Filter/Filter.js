@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
 import s from "../ContactList/phonebook.module.css";
-import actions from '../../redux/contacts/contacts-action';
+import {filterContacts} from "../../redux/contacts/contacts-action";
+import contactsSelectors  from "../../redux/contacts/contacts-selectors";
 
 const Filter = ({ filterVal, onChangeFilter  }) => (
   <label className={s.filter_label}>
@@ -22,7 +23,7 @@ Filter.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  filterVal: state.contacts.filter,
+  filterVal: contactsSelectors.getFilter(state),
 });
 
 //фыльтрування 
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => ({
 // };
 
 const mapDispatchToProps = (dispatch) => ({
-  onChangeFilter: (e) => dispatch(actions.filterContacts(e.target.value)),
+  onChangeFilter: (e) => dispatch(filterContacts(e.target.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

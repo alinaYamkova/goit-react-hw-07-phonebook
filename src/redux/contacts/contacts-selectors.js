@@ -1,19 +1,25 @@
 import { createSelector } from "reselect";
 
-const getLoading = (state) => state.contacts.loading;
 const getAllContacts = (state) => state.contacts.items;
+const getLoading = (state) => state.contacts.loading;
 const getFilter = (state) => state.contacts.filter;
 
 // мемоизация
-const showFilteredContacts = createSelector(
+const showFilteredContacts  = createSelector(
   [getAllContacts, getFilter],
   (contacts, filter) => {
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter((contact) =>
-      contact.name.includes(normalizedFilter)
+      contact.name.toLowerCase().includes(normalizedFilter)
     );
   }
 );
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default { getLoading, getAllContacts, getFilter, showFilteredContacts };
+// const showFilteredContacts = (contacts, filter) => {
+//   const normalizedFilter = filter.toLowerCase();
+//   return contacts.filter((contact) =>
+//      contact.name.includes(normalizedFilter)
+//   );
+// };
+
+export default { getAllContacts, getLoading, getFilter, showFilteredContacts };
