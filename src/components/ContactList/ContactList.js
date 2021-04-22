@@ -12,11 +12,11 @@ class ContactList extends Component {
   }
 
   render() {
-    const { contacts, onDeleteContact, isLoadingContacts } = this.props;
+    const { contacts, onDeleteContact } = this.props;
     
     return (
       <>
-        {isLoadingContacts && <h1 className={s.loading}><Loader /></h1>}
+        {/* {isLoadingContacts && <h1 className={s.loading}><Loader /></h1>} */}
         <ol>
           {contacts.map(({ id, name, number }) => (
             <li className={s.list} key={id}>
@@ -42,11 +42,10 @@ ContactList.propTypes = {
   onDeleteContact: PropTypes.func.isRequired,
 };
 
-// const { getLoading, showFilteredContacts } = contactsSelectors;
-
 const mapStateToProps = (state) => ({
   contacts: contactsSelectors.showFilteredContacts(state),
-  isLoadingContacts: contactsSelectors.getLoading(state),
+  // isLaodingContacts: getLoading(state),
+  filterVal: contactsSelectors.getFilter(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
