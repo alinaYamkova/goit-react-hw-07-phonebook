@@ -28,12 +28,12 @@ const fetchContact = () => async dispatch => {
   //   .catch((error) => dispatch(fetchContactError(error)));
 };
 
-const addContact = ({ name, number }) => async dispatch => {
-  dispatch(addContactRequest());
+const addContact = ( name, number ) => async dispatch => {
   const contact = { name, number };
+  dispatch(addContactRequest());
 
   try {
-    const { data } = await axios.post("/contacts", contact);
+    const { data } = await axios.post('/contacts', contact);
     dispatch(addContactSuccess(data));
   } catch (error) {
     dispatch(addContactError(error));
