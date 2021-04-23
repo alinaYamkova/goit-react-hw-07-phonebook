@@ -21,22 +21,18 @@ class ContactForm extends Component {
     const { name, number } = this.state;
     const { contacts, onSubmit } = this.props;
    
-    const newContact = contacts.find(
-      (item) => item.name.toLowerCase() === name.toLowerCase()
+    const newName = contacts.find(
+      (contact) => contact.name.toLowerCase() === name.toLowerCase(),
     );
   
-    if (newContact) {
-      alert(`${name} is already in contacts`);
+    if (newName) {
+      alert('contact is already in the list');
       return;
-    }
-      onSubmit(this.state);
-      this.reset();
-      return;
-  };
-
-  reset = () => {
+    } 
+    const newContact = { name: name.trim(), number: number.trim() };
+    onSubmit(newContact);
     this.setState({ name: "", number: "" });
-  };
+  }
 
   render() {
     return (
@@ -75,10 +71,6 @@ class ContactForm extends Component {
   }
 };
 
-// const mapDispatchToProps = (state) => ({
-//   addNewContact: (contact) => dispatch(actions.addContact(contact)),
-// });
-// export default connect(mapStateToProps,mapDispatchToProps) (ContactForm);
 
 const mapStateToProps = (state) => ({
   contacts: contactsSelectors.getAllContacts(state),
