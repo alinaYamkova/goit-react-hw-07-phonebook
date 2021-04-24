@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Loader from '../../Loader/Loader';
 import PropTypes from 'prop-types';
 import s from '../ContactList/phonebook.module.css';
-import { fetchContact, deleteContact } from '../../redux/contacts/contacts-operations';
+import { fetchContacts, deleteContact } from '../../redux/contacts/contacts-operations';
 import contactsSelectors from '../../redux/contacts/contacts-selectors';
 
 class ContactList extends Component {
@@ -21,8 +21,6 @@ class ContactList extends Component {
             <Loader />
           </h1>
         )}
-
-        {/* {contacts.length > 0 && ( */}
           <ol>
             {contacts.map(({ id, name, number }) => (
               <li className={s.list} key={id}>
@@ -38,7 +36,6 @@ class ContactList extends Component {
               </li>
             ))}
           </ol>
-        {/* )} */}
       </>
     );
   }
@@ -55,8 +52,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchContact: () => dispatch(fetchContact()),
   onDeleteContact: id => dispatch(deleteContact(id)),
+  fetchContact: () => dispatch(fetchContacts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
