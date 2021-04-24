@@ -9,7 +9,7 @@ import {
     deleteContactRequest,
     deleteContactSuccess,
     deleteContactError,
-} from "./contacts-action";
+} from "./contacts-actions";
 
 axios.defaults.baseURL = "http://localhost:4040";
 
@@ -28,8 +28,10 @@ const fetchContact = () => async dispatch => {
   //   .catch((error) => dispatch(fetchContactError(error)));
 };
 
-const addContact = ( name, number ) => async dispatch => {
-  const contact = { name, number };
+// const addContact = ( name, number ) => async dispatch => {
+//   const contact = { name, number };
+//   dispatch(addContactRequest());
+const addContact = contact => async dispatch => {
   dispatch(addContactRequest());
 
   try {
@@ -59,4 +61,4 @@ const deleteContact = (id) => async dispatch => {
   //   .catch((error) => dispatch(deleteContactError(error)));
 };
  
-export default { fetchContact, addContact, deleteContact };
+export { fetchContact, addContact, deleteContact };

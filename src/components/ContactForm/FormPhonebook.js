@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import contactsOperations from "../../redux/contacts/contacts-operations";
+import { addContact } from "../../redux/contacts/contacts-operations";
 import contactsSelectors from "../../redux/contacts/contacts-selectors"; 
 import s from "../ContactList/phonebook.module.css";
 import { v4 as uuidv4 } from 'uuid'
@@ -19,9 +19,9 @@ class ContactForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { name, number } = this.state;
-    const { contacts, onSubmit } = this.props;
+    const { items, onSubmit } = this.props;
    
-    const newName = contacts.find(
+    const newName = items.find(
       (contact) => contact.name.toLowerCase() === name.toLowerCase(),
     );
   
@@ -31,8 +31,12 @@ class ContactForm extends Component {
     } 
     const newContact = { name: name.trim(), number: number.trim() };
     onSubmit(newContact);
-    this.setState({ name: "", number: "" });
-  }
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({ name: '', number: '' });
+  };
 
   render() {
     return (
@@ -73,11 +77,11 @@ class ContactForm extends Component {
 
 
 const mapStateToProps = (state) => ({
-  contacts: contactsSelectors.getAllContacts(state),
+  items: contactsSelectors.getAllContacts(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (contact) => dispatch(contactsOperations.addContact(contact)),
+  onSubmit: (contact) => dispatch(addContact(contact)),
 });
     
 export default connect(mapStateToProps,mapDispatchToProps) (ContactForm);

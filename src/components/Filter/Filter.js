@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
 import s from "../ContactList/phonebook.module.css";
-import {filterContacts} from "../../redux/contacts/contacts-action";
+import {filterContacts} from "../../redux/contacts/contacts-actions";
 import contactsSelectors  from "../../redux/contacts/contacts-selectors";
 
 const Filter = ({ filterVal, onChangeFilter  }) => (
