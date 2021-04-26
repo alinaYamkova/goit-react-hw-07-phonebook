@@ -1,25 +1,32 @@
+import {
+  // persistStore,
+  // persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from "redux-logger";
-import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import {contactsReducer} from "./contacts/contacts-reducers";
 
-// удаляем persistStore
+
+// const middleware = [...getDefaultMiddleware(), logger];
 
 const middleware = [
   ...getDefaultMiddleware({
     serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], 
     },
-  }),
-  logger,
+  }), logger,
 ];
 
 const store = configureStore({
-  reducer: {
-    contacts: contactsReducer,
-  },
+  reducer: { contacts: contactsReducer },
   middleware,
-  devTools: process.env.NODE_ENV === "development",
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 

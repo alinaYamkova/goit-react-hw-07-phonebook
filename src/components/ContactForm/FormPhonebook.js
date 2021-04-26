@@ -81,7 +81,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (contact) => dispatch(addContact(contact)),
+  onSubmit: (item) => dispatch(addContact(item)),
 });
     
 export default connect(mapStateToProps,mapDispatchToProps) (ContactForm);
